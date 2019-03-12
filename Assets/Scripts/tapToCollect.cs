@@ -62,10 +62,10 @@ public class tapToCollect : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             var noHit = hit.collider.GetComponent<BoxCollider>();
-            if (noHit)
+            if (noHit !=null)
             //if (hit.collider.CompareTag("Player"))
             {
-                //noHit.GetComponent<MeshRenderer>().material = hitMaterial;
+                noHit.GetComponent<MeshRenderer>().material = hitMaterial;
                 Destroy(gameObject);
 
             }

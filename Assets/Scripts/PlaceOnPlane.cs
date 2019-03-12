@@ -17,6 +17,11 @@ public class PlaceOnPlane : MonoBehaviour
     [Tooltip("Instantiates this prefab on a plane at the touch location.")]
     GameObject m_PlacedPrefab;
 
+    private ARPlaneManager arManager;
+    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+
+    ARSessionOrigin m_SessionOrigin;
+
     /// <summary>
     /// The prefab to instantiate on touch.
     /// </summary>
@@ -34,6 +39,8 @@ public class PlaceOnPlane : MonoBehaviour
     void Awake()
     {
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
+        arManager = GetComponent<ARPlaneManager>();
+        arManager.planeAdded += OnPlaneDetected;
     }
 
     void Update()
@@ -60,7 +67,9 @@ public class PlaceOnPlane : MonoBehaviour
         }
     }
 
-    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+    private void OnPlaneDetected(ARPlaneAddedEventArgs args)
+    {
+        Instantiate(m_PlacedPrefab, args.plane.boundedPlane.Center, Quaternion.identity);
+    }
 
-    ARSessionOrigin m_SessionOrigin;
 }
