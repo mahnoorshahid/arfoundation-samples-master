@@ -58,13 +58,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
 
-        //void onTriggerEnter(Collider otherTouch)
-        //{
-        //    if (otherTouch = placementPose)
-        //    {
-        //        Destroy(objectToPlace);
-        //    }
-        //}
     }
 
     private void UpdatePlacementIndicator()
@@ -83,7 +76,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     private void UpdatePlacementPose()
     {
         var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
-       // var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(touchPos.x,touchPos.y));
         var hits = new List<ARRaycastHit>();
         arOrigin.Raycast(screenCenter, hits, TrackableType.Planes);
 

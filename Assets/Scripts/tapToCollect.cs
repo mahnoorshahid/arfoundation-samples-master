@@ -19,11 +19,7 @@ public class tapToCollect : MonoBehaviour
 
 
 
-    private void Awake()
-    {
-        //width = (float)Screen.width / 2.0f;
-        //height = (float)Screen.height / 2.0f;
-    }
+  
 
     void Start()
     {
@@ -66,10 +62,10 @@ public class tapToCollect : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             var noHit = hit.collider.GetComponent<BoxCollider>();
-            if (noHit !=null)
+            if (noHit)
             //if (hit.collider.CompareTag("Player"))
             {
-                noHit.GetComponent<MeshRenderer>().material = hitMaterial;
+                //noHit.GetComponent<MeshRenderer>().material = hitMaterial;
                 Destroy(gameObject);
 
             }
