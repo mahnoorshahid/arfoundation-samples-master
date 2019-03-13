@@ -16,6 +16,8 @@ public class PlaceOnPlane : MonoBehaviour
     [SerializeField]
     [Tooltip("Instantiates this prefab on a plane at the touch location.")]
     GameObject m_PlacedPrefab;
+    GameObject bird;
+    int spawnNum = 8;
 
     private ARPlaneManager arManager;
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
@@ -45,31 +47,47 @@ public class PlaceOnPlane : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount == 0)
-            return;
+        //if (Input.touchCount == 0)
+        //    return;
 
-        var touch = Input.GetTouch(0);
+        //var touch = Input.GetTouch(0);
 
-        if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
-        {
-            // Raycast hits are sorted by distance, so the first one
-            // will be the closest hit.
-            var hitPose = s_Hits[0].pose;
+        //if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
+        //{
+        //    // Raycast hits are sorted by distance, so the first one
+        //    // will be the closest hit.
+        //    var hitPose = s_Hits[0].pose;
 
-            if (spawnedObject == null)
-            {
-                spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-            }
-            else
-            {
-                spawnedObject.transform.position = hitPose.position;
-            }
-        }
+        //    if (spawnedObject == null)
+        //    {
+        //        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+        //    }
+        //    else
+        //    {
+        //        spawnedObject.transform.position = hitPose.position;
+        //    }
+        //}
+
+    
     }
 
     private void OnPlaneDetected(ARPlaneAddedEventArgs args)
     {
         Instantiate(m_PlacedPrefab, args.plane.boundedPlane.Center, Quaternion.identity);
+        spawn(args);
+    }
+    
+    void spawn(ARPlaneAddedEventArgs args)
+    {
+        var position = args.plane.boundedPlane.Center;
+        for (int i = 0; i < spawnNum; i++)
+        {
+            //Vector3 birdPos = new Vector3((int)args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
+            Instantiate(m_PlacedPrefab, position * Random.Range(-1.0f,1.0f), Quaternion.identity);
+
+        }
+
+  
     }
 
 }
