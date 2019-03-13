@@ -65,8 +65,8 @@ public class tapToCollect : MonoBehaviour
             if (noHit !=null)
             //if (hit.collider.CompareTag("Player"))
             {
-                noHit.GetComponent<MeshRenderer>().material = hitMaterial;
-                Destroy(gameObject);
+                noHit.GetComponent<MeshRenderer>().enabled = false;
+                noHit.GetComponent<BoxCollider>().enabled = false;
 
             }
         }
