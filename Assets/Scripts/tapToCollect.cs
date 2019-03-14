@@ -14,24 +14,25 @@ public class tapToCollect : MonoBehaviour
     private Pose placementPose;
     private PlaceOnPlane placeOnPlane;
     private ARPlaneManager arManager;
+    private pickUp pickUpScript;
 
 
+    //GameObject[] m_PlacedPrefab;
 
 
     void Start()
     {
         arOrigin = FindObjectOfType<ARSessionOrigin>();
-        placeOnPlane = GetComponent<PlaceOnPlane>();
         arManager = GetComponent<ARPlaneManager>();
-        //arManager.planeAdded += Respawn;
-
+        placeOnPlane = GameObject.Find("AR Session Origin").GetComponent<PlaceOnPlane>();
+        pickUpScript = GameObject.Find("Canvas").GetComponent<pickUp>();
         InvokeRepeating("Respawn", 1, 1);
     }
 
     void Update()
     {
    
-        RegisterModelTouch();
+        //RegisterModelTouch();
     }
 
 
@@ -55,38 +56,45 @@ public class tapToCollect : MonoBehaviour
 
     public void RegisterModelTouch()
     {
-    
-        Touch touch = Input.touches[0];
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(touch.position);
-        if (Physics.Raycast(ray, out hit))
-        {
-            var noHit = hit.collider.GetComponent<BoxCollider>();
-            if (noHit !=null)
+
+        Respawn();
+        Destroy(this.gameObject);
+
+        //Touch touch = Input.touches[0];
+        //RaycastHit hit;
+        //Ray ray = Camera.main.ScreenPointToRay(touch.position);
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    var noHit = hit.collider.GetComponent<BoxCollider>();
+        //    if (noHit !=null)
            
-            {
-                noHit.GetComponent<MeshRenderer>().enabled = false;
-                noHit.GetComponent<BoxCollider>().enabled = false;
-                //gameObject.name 
-                Respawn();
-                Destroy(this.gameObject);
+        //    {
+        //        //noHit.GetComponent<MeshRenderer>().enabled = false;
+        //        //noHit.GetComponent<BoxCollider>().enabled = false;
+        //        //gameObject.name 
+        //        Respawn();
+        //        Destroy(this.gameObject);
                 
-            }
-        }
+        //    }
+        //}
     }
 
 
     // void Respawn(ARPlaneAddedEventArgs args)
+void TimeDelay()
+    {
+        Respawn();
+    }
 
     void Respawn()
     {
         float random = Random.Range(-5.0f, 5.0f);
 
-        this.GetComponent<MeshRenderer>().enabled = true;
-        this.GetComponent<BoxCollider>().enabled = true;
+        //this.GetComponent<MeshRenderer>().enabled = true;
+        //this.GetComponent<BoxCollider>().enabled = true;
 
-        // Instantiate(placeOnPlane.placedPrefab, transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
-       //Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
+         Instantiate(placeOnPlane.m_PlacedPrefab[Random.Range(0, placeOnPlane.m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
+      //Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
 
     }
 }

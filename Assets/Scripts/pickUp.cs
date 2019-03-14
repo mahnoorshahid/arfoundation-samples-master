@@ -7,15 +7,44 @@ public class pickUp : MonoBehaviour
 {
     public GameObject inventoryPanel;
     public GameObject[] inventoryIcons;
-    // Start is called before the first frame update
-    void Start()
+    public Text coyoteCount;
+    private int coyoteNum;
+
+    public void ObjectPicked(string name)
     {
-        
+        switch (name)
+        {
+            case "coyote":
+                coyoteNum++;
+                coyoteCount.text = coyoteCount.ToString();
+
+                   
+                break;
+
+            
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+         foreach (Transform child in inventoryPanel.transform)
+        {
+            if (child.gameObject.name == collision.gameObject.name)
+            {
+                string c = child.Find("Text").GetComponent<Text>().text;
+                int tcount = System.Int32.Parse(c) + 1;
+                child.Find("Text").GetComponent<Text>().text = "" + tcount;
+
+            }
+        }
+
+        GameObject i;
+        if (collision.gameObject.name == "blueJay try 3")
+        {
+            i = Instantiate(inventoryIcons[0]);
+            i.transform.SetParent(inventoryPanel.transform);
+        }
+
     }
+ 
 }

@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 1970564908126416539}
   - component: {fileID: 2428438892946177924}
   - component: {fileID: 6420803935165016038}
+  - component: {fileID: 3131901587693421213}
   m_Layer: 0
   m_Name: bearleft2
   m_TagString: Untagged
@@ -121,3 +122,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &3131901587693421213
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539232452412339585}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8584799, y: 2.758051, z: 3.1496081}
+  m_Center: {x: 0.0017712115, y: 1.3753603, z: 0.20546864}
