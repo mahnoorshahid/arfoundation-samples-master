@@ -46,12 +46,13 @@ public class PlaceOnPlane : MonoBehaviour
         arManager = GetComponent<ARPlaneManager>();
         arManager.planeAdded += OnPlaneDetected;
 
-        InvokeRepeating("TimeDelay", 0, 3);
+       // InvokeRepeating("TimeDelay", 0, 3);
 
     }
 
     void Update()
     {
+        RegisterModelTouch();
         //if (Input.touchCount == 0)
         //    return;
 
@@ -73,8 +74,31 @@ public class PlaceOnPlane : MonoBehaviour
         //    }
         //}
 
-     
-     
+
+
+    }
+
+    public void RegisterModelTouch()
+    {
+
+        Touch touch = Input.touches[0];
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+        if (Physics.Raycast(ray, out hit))
+        {
+            var noHit = hit.collider.gameObject.GetComponent<tapToCollect>();
+            if (noHit != null)
+
+            {
+                noHit.RegisterModelTouch();
+                //noHit.GetComponent<MeshRenderer>().enabled = false;
+                //noHit.GetComponent<BoxCollider>().enabled = false;
+                //gameObject.name 
+                //Respawn();
+                //Destroy(this.gameObject);
+
+            }
+        }
     }
 
     void TimeDelay()
@@ -86,7 +110,7 @@ public class PlaceOnPlane : MonoBehaviour
         }
         else if (planeCounter > 1)
         {
-            CancelInvoke();
+           // CancelInvoke();
         }
 
     }
