@@ -16,7 +16,7 @@ public class PlaceOnPlane : MonoBehaviour
     [SerializeField]
     [Tooltip("Instantiates this prefab on a plane at the touch location.")]
     GameObject m_PlacedPrefab;
-    GameObject bird;
+    GameObject m_BlueJay;
     int spawnNum = 3;
 
     private ARPlaneManager arManager;
@@ -32,7 +32,15 @@ public class PlaceOnPlane : MonoBehaviour
         get { return m_PlacedPrefab; }
         set { m_PlacedPrefab = value; }
     }
-    
+
+    public GameObject placedBlueJay
+    {
+        get { return m_BlueJay; }
+        set { m_BlueJay = value; }
+    }
+
+
+
     /// <summary>
     /// The object instantiated as a result of a successful raycast intersection with a plane.
     /// </summary>
@@ -67,24 +75,27 @@ public class PlaceOnPlane : MonoBehaviour
         //        spawnedObject.transform.position = hitPose.position;
         //    }
         //}
-
+  
     
     }
 
     private void OnPlaneDetected(ARPlaneAddedEventArgs args)
     {
-
+        var random = Random.Range(-5.0f, 5.0f);
         Instantiate(m_PlacedPrefab, args.plane.boundedPlane.Center, Quaternion.identity);
+        Instantiate(placedBlueJay, args.plane.boundedPlane.Center, Quaternion.identity);
+
         spawn(args);
     }
     
     void spawn(ARPlaneAddedEventArgs args)
     {
         var position = args.plane.boundedPlane.Center;
+        var random = Random.Range(-5.0f, 5.0f);
         for (int i = 0; i < spawnNum; i++)
         {
             //Vector3 birdPos = new Vector3((int)args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
-            Instantiate(m_PlacedPrefab, position * Random.Range(-1.0f,1.0f), Quaternion.identity);
+            Instantiate(placedBlueJay, args.plane.boundedPlane.Center * random, Quaternion.identity);
 
         }
 

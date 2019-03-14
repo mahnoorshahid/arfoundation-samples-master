@@ -14,8 +14,6 @@ public class tapToCollect : MonoBehaviour
     private Pose placementPose;
 
 
-    public GameObject gameObject;
-
 
 
     void Start()
