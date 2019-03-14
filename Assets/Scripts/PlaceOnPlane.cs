@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARFoundation;
 
+
 /// <summary>
 /// Listens for touch events and performs an AR raycast from the screen touch point.
 /// AR raycasts will only hit detected trackables like feature points and planes.
@@ -15,8 +16,9 @@ public class PlaceOnPlane : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Instantiates this prefab on a plane at the touch location.")]
-    GameObject m_PlacedPrefab;
-    GameObject m_BlueJay;
+    GameObject[] m_PlacedPrefab;
+
+    public GameObject spawnPrehab;
     int spawnNum = 3;
 
     private ARPlaneManager arManager;
@@ -27,18 +29,8 @@ public class PlaceOnPlane : MonoBehaviour
     /// <summary>
     /// The prefab to instantiate on touch.
     /// </summary>
-    public GameObject placedPrefab
-    {
-        get { return m_PlacedPrefab; }
-        set { m_PlacedPrefab = value; }
-    }
 
-    public GameObject placedBlueJay
-    {
-        get { return m_BlueJay; }
-        set { m_BlueJay = value; }
-    }
-
+   
 
 
     /// <summary>
@@ -51,53 +43,50 @@ public class PlaceOnPlane : MonoBehaviour
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
         arManager = GetComponent<ARPlaneManager>();
         arManager.planeAdded += OnPlaneDetected;
+        arManager.planeAdded += spawn;
     }
 
     void Update()
     {
-        //if (Input.touchCount == 0)
-        //    return;
+        if (Input.touchCount == 0)
+            return;
 
-        //var touch = Input.GetTouch(0);
+        var touch = Input.GetTouch(0);
 
-        //if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
-        //{
-        //    // Raycast hits are sorted by distance, so the first one
-        //    // will be the closest hit.
-        //    var hitPose = s_Hits[0].pose;
+        if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
+        {
+            // Raycast hits are sorted by distance, so the first one
+            // will be the closest hit.
+            var hitPose = s_Hits[0].pose;
 
-        //    if (spawnedObject == null)
-        //    {
-        //        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-        //    }
-        //    else
-        //    {
-        //        spawnedObject.transform.position = hitPose.position;
-        //    }
-        //}
-  
+            if (spawnedObject == null)
+            {
+                spawnedObject = Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length-1)], hitPose.position, hitPose.rotation);
+            }
+            else
+            {
+                spawnedObject.transform.position = hitPose.position;
+            }
+        }
     
     }
 
     private void OnPlaneDetected(ARPlaneAddedEventArgs args)
     {
-        var random = Random.Range(-5.0f, 5.0f);
-        Instantiate(m_PlacedPrefab, args.plane.boundedPlane.Center, Quaternion.identity);
-        Instantiate(placedBlueJay, args.plane.boundedPlane.Center, Quaternion.identity);
+       
+        Instantiate(m_PlacedPrefab[Random.Range(0,m_PlacedPrefab.Length-1)], args.plane.boundedPlane.Center, Quaternion.identity);
 
-        spawn(args);
     }
     
     void spawn(ARPlaneAddedEventArgs args)
     {
-        var position = args.plane.boundedPlane.Center;
         var random = Random.Range(-5.0f, 5.0f);
         for (int i = 0; i < spawnNum; i++)
         {
-            //Vector3 birdPos = new Vector3((int)args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
-            Instantiate(placedBlueJay, args.plane.boundedPlane.Center * random, Quaternion.identity);
+           //Vector3 birdPos = new Vector3(args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
+            Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
 
-        }
+       }
 
   
     }
