@@ -17,7 +17,7 @@ public class PlaceOnPlane : MonoBehaviour
     [Tooltip("Instantiates this prefab on a plane at the touch location.")]
     GameObject m_PlacedPrefab;
     GameObject bird;
-    int spawnNum = 8;
+    int spawnNum = 3;
 
     private ARPlaneManager arManager;
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
@@ -73,6 +73,7 @@ public class PlaceOnPlane : MonoBehaviour
 
     private void OnPlaneDetected(ARPlaneAddedEventArgs args)
     {
+
         Instantiate(m_PlacedPrefab, args.plane.boundedPlane.Center, Quaternion.identity);
         spawn(args);
     }

@@ -12,14 +12,11 @@ public class tapToCollect : MonoBehaviour
 
     private ARSessionOrigin arOrigin;
     private Pose placementPose;
-    public Material hitMaterial;
 
 
     public GameObject gameObject;
 
 
-
-  
 
     void Start()
     {
@@ -63,7 +60,7 @@ public class tapToCollect : MonoBehaviour
         {
             var noHit = hit.collider.GetComponent<BoxCollider>();
             if (noHit !=null)
-            //if (hit.collider.CompareTag("Player"))
+           
             {
                 noHit.GetComponent<MeshRenderer>().enabled = false;
                 noHit.GetComponent<BoxCollider>().enabled = false;

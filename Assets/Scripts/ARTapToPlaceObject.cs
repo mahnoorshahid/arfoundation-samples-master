@@ -38,16 +38,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
         if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-
-            //Touch touch = Input.GetTouch(0);
-            //if (touch.phase == TouchPhase.Began)
-            //{
-            //    Vector2 pos = touch.position;
-            //    pos.x = (pos.x - width) / width;
-            //    pos.y = (pos.y - height) / height;
-            //    touchPos = new Vector3(-pos.x, pos.y, 0.0f);
-            //    Debug.Log(touchPos);
-            //}
+        
 
             PlaceObject();
            
