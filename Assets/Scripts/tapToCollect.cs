@@ -26,7 +26,7 @@ public class tapToCollect : MonoBehaviour
         arManager = GetComponent<ARPlaneManager>();
         placeOnPlane = GameObject.Find("AR Session Origin").GetComponent<PlaceOnPlane>();
         pickUpScript = GameObject.Find("Canvas").GetComponent<pickUp>();
-        InvokeRepeating("Respawn", 1, 1);
+       //s InvokeRepeating("Respawn", 1, 1);
     }
 
     void Update()
@@ -58,7 +58,8 @@ public class tapToCollect : MonoBehaviour
     {
 
         Respawn();
-        Destroy(this.gameObject);
+        pickUpScript.ObjectPicked(gameObject.name);
+       // Destroy(gameObject);
 
         //Touch touch = Input.touches[0];
         //RaycastHit hit;
@@ -81,18 +82,14 @@ public class tapToCollect : MonoBehaviour
 
 
     // void Respawn(ARPlaneAddedEventArgs args)
-void TimeDelay()
+//void TimeDelay()
+    //{
+    //    Respawn();
+    //}
+
+    public void Respawn()
     {
-        Respawn();
-    }
-
-    void Respawn()
-    {
-        float random = Random.Range(-5.0f, 5.0f);
-
-        //this.GetComponent<MeshRenderer>().enabled = true;
-        //this.GetComponent<BoxCollider>().enabled = true;
-
+        float random = Random.Range(-15.0f, 15.0f);
          Instantiate(placeOnPlane.m_PlacedPrefab[Random.Range(0, placeOnPlane.m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
       //Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
 

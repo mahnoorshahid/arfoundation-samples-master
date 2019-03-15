@@ -19,7 +19,7 @@ public class PlaceOnPlane : MonoBehaviour
     public GameObject[] m_PlacedPrefab;
 
     public GameObject spawnPrehab;
-    int spawnNum = 3;
+    int spawnNum = 1;
     int planeCounter;
     public int instanceCounter;
 
@@ -46,13 +46,13 @@ public class PlaceOnPlane : MonoBehaviour
         arManager = GetComponent<ARPlaneManager>();
         arManager.planeAdded += OnPlaneDetected;
 
-       // InvokeRepeating("TimeDelay", 0, 3);
+       InvokeRepeating("TimeDelay", 0, 3);
 
     }
 
     void Update()
     {
-        RegisterModelTouch();
+       // RegisterModelTouch();
         //if (Input.touchCount == 0)
         //    return;
 
@@ -80,22 +80,27 @@ public class PlaceOnPlane : MonoBehaviour
 
     public void RegisterModelTouch()
     {
-
+        
         Touch touch = Input.touches[0];
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(touch.position);
         if (Physics.Raycast(ray, out hit))
         {
-            var noHit = hit.collider.gameObject.GetComponent<tapToCollect>();
+            //var collectScript = GetComponent<tapToCollect>();
+            var tapScript = hit.collider.gameObject.GetComponent<tapToCollect>();
+            var noHit = hit.collider.gameObject.GetComponent<BoxCollider>();
+            var objHit = hit.collider.gameObject.GetComponent<GameObject>();
             if (noHit != null)
 
             {
-                noHit.RegisterModelTouch();
-                //noHit.GetComponent<MeshRenderer>().enabled = false;
-                //noHit.GetComponent<BoxCollider>().enabled = false;
+                // tapScript.RegisterModelTouch();
+                tapScript.Respawn();
+                //Destroy(objHit);
+
+
                 //gameObject.name 
                 //Respawn();
-                //Destroy(this.gameObject);
+                Destroy(this.gameObject);
 
             }
         }
@@ -117,7 +122,7 @@ public class PlaceOnPlane : MonoBehaviour
 
     private void OnPlaneDetected(ARPlaneAddedEventArgs args)
     {
-        planeCounter++;
+       // planeCounter++;
         Instantiate(m_PlacedPrefab[Random.Range(0,m_PlacedPrefab.Length-1)], args.plane.boundedPlane.Center, Quaternion.identity);
 
     }
@@ -129,7 +134,7 @@ public class PlaceOnPlane : MonoBehaviour
         {
            //Vector3 birdPos = new Vector3(args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
             Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
-            instanceCounter++;
+            //instanceCounter++;
        }
        
     }
