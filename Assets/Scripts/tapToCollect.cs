@@ -58,8 +58,8 @@ public class tapToCollect : MonoBehaviour
     {
 
         Respawn();
-        pickUpScript.ObjectPicked(gameObject.name);
-       // Destroy(gameObject);
+        //pickUpScript.ObjectPicked(gameObject.name);
+        Destroy(gameObject);
 
         //Touch touch = Input.touches[0];
         //RaycastHit hit;
