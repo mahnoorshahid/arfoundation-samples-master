@@ -22,7 +22,7 @@ public class PlaceOnPlane : MonoBehaviour
     int spawnNum = 1;
     int planeCounter;
     public int instanceCounter;
-
+    private tapToCollect tapScript;
     private ARPlaneManager arManager;
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
@@ -38,21 +38,24 @@ public class PlaceOnPlane : MonoBehaviour
     /// <summary>
     /// The object instantiated as a result of a successful raycast intersection with a plane.
     /// </summary>
-    public GameObject spawnedObject { get; private set; }
+    public GameObject spawnedObject { get; private set; } 
 
     void Awake()
     {
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
         arManager = GetComponent<ARPlaneManager>();
         arManager.planeAdded += OnPlaneDetected;
-
-       InvokeRepeating("TimeDelay", 0, 3);
+        tapScript = GetComponent<tapToCollect>();
+        InvokeRepeating("TimeDelay", 0, 5);
 
     }
 
     void Update()
     {
-       // RegisterModelTouch();
+
+       
+        tapScript.RegisterModelTouch();
+        //sRegisterModelTouch();
         //if (Input.touchCount == 0)
         //    return;
 
@@ -78,51 +81,54 @@ public class PlaceOnPlane : MonoBehaviour
 
     }
 
-    public void RegisterModelTouch()
-    {
+    //public void RegisterModelTouch()
+    //{
         
-        Touch touch = Input.touches[0];
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(touch.position);
-        if (Physics.Raycast(ray, out hit))
-        {
-            //var collectScript = GetComponent<tapToCollect>();
-            var tapScript = hit.collider.gameObject.GetComponent<tapToCollect>();
-            var noHit = hit.collider.gameObject.GetComponent<BoxCollider>();
-            var objHit = hit.collider.gameObject.GetComponent<GameObject>();
-            if (noHit != null)
+    //    Touch touch = Input.touches[0];
+    //    RaycastHit hit;
+    //    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+    //    if (Physics.Raycast(ray, out hit))
+    //    {
+    //        //var collectScript = GetComponent<tapToCollect>();
+    //        var tapScript = hit.collider.gameObject.GetComponent<tapToCollect>();
+    //        var noHit = hit.collider.GetComponent<GameObject>();
+    //        var objHit = hit.collider.gameObject.GetComponent<GameObject>();
+    //        if (noHit != null)
 
-            {
-                // tapScript.RegisterModelTouch();
-                tapScript.Respawn();
-                //Destroy(objHit);
+    //        {
+    //            tapScript.RegisterModelTouch();
+    //            //tapScript.Respawn();
+    //            //Destroy(objHit);
 
+    //            TimeDelay();
+    //            //gameObject.name 
 
-                //gameObject.name 
-                //Respawn();
-                Destroy(this.gameObject);
+    //            noHit.GetComponent<MeshRenderer>().enabled = false;
+    //            noHit.GetComponent<BoxCollider>().enabled = false;
 
-            }
-        }
-    }
+    //            Destroy(this.gameObject);
+
+    //        }
+    //    }
+    //}
 
     void TimeDelay()
     {
 
-        if (planeCounter == 1 && instanceCounter <= 3)
+        if (planeCounter == 1 && instanceCounter <= 5 )
         {
             spawn();
         }
-        else if (planeCounter > 1)
+        else if (planeCounter > 4)
         {
-           // CancelInvoke();
+            CancelInvoke();
         }
 
     }
 
     private void OnPlaneDetected(ARPlaneAddedEventArgs args)
     {
-       // planeCounter++;
+        planeCounter++;
         Instantiate(m_PlacedPrefab[Random.Range(0,m_PlacedPrefab.Length-1)], args.plane.boundedPlane.Center, Quaternion.identity);
 
     }
@@ -134,7 +140,7 @@ public class PlaceOnPlane : MonoBehaviour
         {
            //Vector3 birdPos = new Vector3(args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
             Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
-            //instanceCounter++;
+            instanceCounter++;
        }
        
     }

@@ -32,7 +32,7 @@ public class tapToCollect : MonoBehaviour
     void Update()
     {
    
-        //RegisterModelTouch();
+        RegisterModelTouch();
     }
 
 
@@ -57,27 +57,27 @@ public class tapToCollect : MonoBehaviour
     public void RegisterModelTouch()
     {
 
-        Respawn();
+        //Respawn();
         //pickUpScript.ObjectPicked(gameObject.name);
-        Destroy(gameObject);
+       // Destroy(gameObject);
 
-        //Touch touch = Input.touches[0];
-        //RaycastHit hit;
-        //Ray ray = Camera.main.ScreenPointToRay(touch.position);
-        //if (Physics.Raycast(ray, out hit))
-        //{
-        //    var noHit = hit.collider.GetComponent<BoxCollider>();
-        //    if (noHit !=null)
+        Touch touch = Input.touches[0];
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+        if (Physics.Raycast(ray, out hit))
+        {
+            var noHit = hit.collider.GetComponent<BoxCollider>();
+            if (noHit !=null)
            
-        //    {
-        //        //noHit.GetComponent<MeshRenderer>().enabled = false;
-        //        //noHit.GetComponent<BoxCollider>().enabled = false;
-        //        //gameObject.name 
-        //        Respawn();
-        //        Destroy(this.gameObject);
+            {
+                //noHit.GetComponent<MeshRenderer>().enabled = false;
+                //noHit.GetComponent<BoxCollider>().enabled = false;
+                //gameObject.name 
+                Respawn();
+                Destroy(this.gameObject);
                 
-        //    }
-        //}
+            }
+        }
     }
 
 
