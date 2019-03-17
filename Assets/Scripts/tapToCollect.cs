@@ -58,7 +58,7 @@ public class tapToCollect : MonoBehaviour
     {
 
         //Respawn();
-        //pickUpScript.ObjectPicked(gameObject.name);
+        pickUpScript.ObjectPicked(gameObject.name);
        // Destroy(gameObject);
 
         Touch touch = Input.touches[0];
@@ -72,24 +72,30 @@ public class tapToCollect : MonoBehaviour
             {
                 //noHit.GetComponent<MeshRenderer>().enabled = false;
                 //noHit.GetComponent<BoxCollider>().enabled = false;
-                //gameObject.name 
-                Respawn();
-                Destroy(this.gameObject);
+              // gameObject.name
+              registerTouch();
                 
             }
         }
     }
 
 
+    public void registerTouch()
+    {
+        Respawn();
+        Destroy(this.gameObject);
+
+    }
+
     // void Respawn(ARPlaneAddedEventArgs args)
-//void TimeDelay()
+    //void TimeDelay()
     //{
     //    Respawn();
     //}
 
     public void Respawn()
     {
-        float random = Random.Range(-15.0f, 15.0f);
+        float random = Random.Range(-2.0f, 2.0f);
          Instantiate(placeOnPlane.m_PlacedPrefab[Random.Range(0, placeOnPlane.m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
       //Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
 
