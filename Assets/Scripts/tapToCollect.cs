@@ -70,8 +70,7 @@ public class tapToCollect : MonoBehaviour
             if (noHit !=null)
            
             {
-                //noHit.GetComponent<MeshRenderer>().enabled = false;
-                //noHit.GetComponent<BoxCollider>().enabled = false;
+
               // gameObject.name
               registerTouch();
                 
@@ -82,24 +81,12 @@ public class tapToCollect : MonoBehaviour
 
     public void registerTouch()
     {
-        Respawn();
+       // Respawn();
         Destroy(this.gameObject);
 
     }
 
-    // void Respawn(ARPlaneAddedEventArgs args)
-    //void TimeDelay()
-    //{
-    //    Respawn();
-    //}
-
-    public void Respawn()
-    {
-        float random = Random.Range(-2.0f, 2.0f);
-         Instantiate(placeOnPlane.m_PlacedPrefab[Random.Range(0, placeOnPlane.m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
-      //Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
-
-    }
+  
 }
 
 

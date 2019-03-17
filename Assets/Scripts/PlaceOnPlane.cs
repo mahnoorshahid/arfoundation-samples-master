@@ -47,7 +47,7 @@ public class PlaceOnPlane : MonoBehaviour
         arManager.planeAdded += OnPlaneDetected;
         tapScript = GetComponent<tapToCollect>();
         InvokeRepeating("TimeDelay", 0, 2);
-        //param = arManager.planeAdded += OnPlaneDetected;
+       
 
     }
 
@@ -117,7 +117,7 @@ public class PlaceOnPlane : MonoBehaviour
     void TimeDelay()
     {
 
-        if (planeCounter > 1 && instanceCounter <= 50 )
+        if (planeCounter > 1 && instanceCounter <= 100 )
         {
             spawn();
      
