@@ -134,6 +134,10 @@ public class PlaceOnPlane : MonoBehaviour
         planeCounter++;
         Instantiate(m_PlacedPrefab[Random.Range(0,m_PlacedPrefab.Length-1)], args.plane.boundedPlane.Center, Quaternion.identity);
 
+        var random = Random.Range(-3.0f, 3.0f);
+        Instantiate(spawnPrehab, args.plane.boundedPlane.Center, Quaternion.identity);
+
+        //Instantiate(spawnPrehab, args.plane.boundedPlane.Center + new Vector3(random, transform.position.y, random), Quaternion.identity);
     }
     
     void spawn()
@@ -142,7 +146,7 @@ public class PlaceOnPlane : MonoBehaviour
         for (int i = 0; i < spawnNum; i++)
         {
            //Vector3 birdPos = new Vector3(args.plane.boundedPlane.Center, args.plane.boundedPlane.Pose.y, args.plane.boundedPlane.Pose.z);
-            Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, random, random), Quaternion.identity);
+            Instantiate(m_PlacedPrefab[Random.Range(0, m_PlacedPrefab.Length - 1)], transform.position + new Vector3(random, transform.position.y, random), Quaternion.identity);
             instanceCounter++;
        }
        
